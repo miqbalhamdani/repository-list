@@ -10,15 +10,19 @@ class App extends Component {
     };
   };
 
-  componentDidMount() {
+  fetch(name) {
     axios
-      .get('https://api.github.com/users/miqbalhamdani/repos')
+      .get(`https://api.github.com/users/${name}/repos`)
       .then(response => {
         this.setState({ repositories: response.data});
       })
       .catch(error => {
         console.log('error', error);
       });
+  };
+
+  inputOnchangeHandler = event => {
+    this.fetch(event.target.value);
   };
 
   render() {
@@ -30,7 +34,16 @@ class App extends Component {
     return (
       <div className="container">
         <div className="row" style={list}>
-          <div className="col-6">
+          <div className="col">
+            <div className="form-group input-group-lg">
+              <input
+                type="text"
+                className="form-control"
+                name="name"
+                placeholder="Repository Name"
+                onChange={this.inputOnchangeHandler} />
+            </div>
+
             <RepositoryList repositories={this.state.repositories} />
           </div>
         </div>
