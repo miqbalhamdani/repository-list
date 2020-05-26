@@ -22,6 +22,11 @@ class App extends Component {
   };
 
   inputOnchangeHandler = event => {
+    if (!event.target.value) {
+      this.setState({ repositories: []});
+      return;
+    }
+
     this.fetch(event.target.value);
   };
 
